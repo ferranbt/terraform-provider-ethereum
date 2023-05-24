@@ -3,11 +3,11 @@ package ethereum
 import (
 	"context"
 
-	"github.com/umbracle/ethgo/jsonrpc"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
+
+const defaultHost = "http://localhost:8545"
 
 func Provider() *schema.Provider {
 	provider := &schema.Provider{
@@ -15,7 +15,7 @@ func Provider() *schema.Provider {
 			"host": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "http://localhost:8545",
+				Default:  defaultHost,
 			},
 		},
 
@@ -31,7 +31,7 @@ func Provider() *schema.Provider {
 	}
 
 	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
-		client, err := jsonrpc.NewClient(d.Get("host").(string))
+		client, err := newClient(d.Get("host").(string))
 		if err != nil {
 			return nil, diag.FromErr(err)
 		}
