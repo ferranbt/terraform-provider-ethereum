@@ -12,5 +12,7 @@ jobs:
           go-version: "1.18.1"
       - name: Deploy devnet
         run: make devnet-up
+      - name: Unit test
+        run: make test
       - name: Acceptance tests
         run: make testacc
