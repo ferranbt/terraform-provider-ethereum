@@ -12,10 +12,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/umbracle/ethgo"
 	"github.com/umbracle/ethgo/abi"
-	"github.com/umbracle/ethgo/jsonrpc"
-	"github.com/umbracle/ethgo/wallet"
 )
 
 func ContractDeploymentResource() *schema.Resource {
@@ -39,6 +36,11 @@ func ContractDeploymentResource() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+			"signer": {
+				Type:     schema.TypeString,
+				ForceNew: true,
+				Required: true,
+			},
 			"hash": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -59,9 +61,13 @@ func ContractDeploymentResource() *schema.Resource {
 }
 
 func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	key, err := wallet.NewWalletFromMnemonic("test test test test test test test test test test test junk")
+	signer, err := hex.DecodeString(d.Get("signer").(string))
 	if err != nil {
 		return diag.FromErr(err)
+	}
+
+	txn := &transaction{
+		Signer: signer,
 	}
 
 	path := d.Get("artifact_path").(string)
@@ -79,22 +85,22 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 			return nil
 		})
 	if err != nil {
-		panic(err)
+		return diag.FromErr(err)
 	}
 
 	rawData, err := ioutil.ReadFile(fullPath)
 	if err != nil {
-		panic(err)
+		return diag.FromErr(err)
 	}
 
 	var artifact *artifact
 	if err := json.Unmarshal(rawData, &artifact); err != nil {
-		panic(err)
+		return diag.FromErr(err)
 	}
 
-	code, err := hex.DecodeString(artifact.Bytecode[2:])
+	code, err := hex.DecodeString(artifact.Bytecode.Object[2:])
 	if err != nil {
-		panic(err)
+		return diag.FromErr(err)
 	}
 
 	if cons := artifact.Abi.Constructor; cons != nil {
@@ -104,17 +110,15 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 		}
 		xxx, err := cons.Inputs.Encode(input)
 		if err != nil {
-			panic(err)
+			return diag.FromErr(err)
 		}
 		code = append(code, xxx...)
 	}
 
-	txn := &ethgo.Transaction{
-		Input: code,
-	}
+	txn.Input = code
 
-	client := meta.(*jsonrpc.Client)
-	hash, receipt, err := sendTransaction(client, key, txn)
+	client := meta.(*client)
+	hash, receipt, err := client.sendTransaction(txn)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -129,7 +133,9 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 
 type artifact struct {
 	Abi      *abi.ABI `json:"abi"`
-	Bytecode string   `json:"bytecode"`
+	Bytecode struct {
+		Object string `json:"object"`
+	} `json:"bytecode"`
 }
 
 func resourceContractDeploymentRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

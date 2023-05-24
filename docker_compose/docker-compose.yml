@@ -2,5 +2,5 @@ version: "3.7"
 services:
   anvil:
     image: "ghcr.io/foundry-rs/foundry:latest"
-    command: ["anvil"]
+    command: ["anvil --block-time 1"]
     network_mode: "host"
