@@ -11,6 +11,8 @@ jobs:
         with:
           go-version: "1.18.1"
       - name: Deploy devnet
+        env:
+          FORK_URL: ${{ secrets.FORK_URL }}
         run: make devnet-up
       - name: Unit test
         run: make test

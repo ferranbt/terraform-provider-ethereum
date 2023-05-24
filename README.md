@@ -46,3 +46,11 @@ data "ethereum_block" "latest" {
   tag = "latest"
 }
 ```
+
+Query a dns name:
+
+```hcl
+data "ethereum_ens" "resolve" {
+  name = "arachnid.eth"
+}
+```
