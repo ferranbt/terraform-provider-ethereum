@@ -7,8 +7,6 @@ import (
 )
 
 func TestAccENS_basic(t *testing.T) {
-	t.Skip("cannot be tested without a forked devnet")
-
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },
 		Providers: testAccProviders,

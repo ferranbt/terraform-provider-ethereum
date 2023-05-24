@@ -10,7 +10,7 @@ test:
 	go test -count=1 -parallel=4 ./...
 
 testacc:
-	TF_ACC=1 go test -count=1 -parallel=4 -timeout 10m -v ./...
+	TF_ACC=1 go test -count=1 -parallel=4 -timeout 10m -v ./... -run TestAccENS_basic
 
 devnet-up:
 	docker-compose --project-directory ./docker_compose up -d 
