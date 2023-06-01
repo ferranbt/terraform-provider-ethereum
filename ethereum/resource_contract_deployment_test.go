@@ -7,10 +7,38 @@ import (
 )
 
 func TestAccContractDeployment_basic(t *testing.T) {
+	checkContractDeployed := func() resource.TestCheckFunc {
+		return resource.ComposeTestCheckFunc(
+			resource.TestCheckResourceAttrSet(
+				"ethereum_contract_deployment.deploy", "hash"),
+			resource.TestCheckResourceAttrSet(
+				"ethereum_contract_deployment.deploy", "contract_address"),
+		)
+	}
+
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
+			{
+				Config: `
+					data "ethereum_eoa" "account" {
+						mnemonic = "test test test test test test test test test test test junk"
+					}
+
+					resource "ethereum_contract_deployment" "deploy" {
+						signer = data.ethereum_eoa.account.signer
+
+						artifact_path     = "../testcases/out"
+						artifact_contract = "Hello"
+
+						input = [
+						  "0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5"
+						]
+					}
+					`,
+				Check: checkContractDeployed(),
+			},
 			{
 				Config: `
 				data "ethereum_eoa" "account" {
@@ -20,7 +48,7 @@ func TestAccContractDeployment_basic(t *testing.T) {
 				resource "ethereum_contract_deployment" "deploy" {
 					signer = data.ethereum_eoa.account.signer
 
-					artifact_path     = "../testcases/out"
+					artifact_path     = "../testcases/artifacts"
 					artifact_contract = "Hello"
 				  
 					input = [
@@ -28,12 +56,7 @@ func TestAccContractDeployment_basic(t *testing.T) {
 					]
 				}
 				`,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet(
-						"ethereum_contract_deployment.deploy", "hash"),
-					resource.TestCheckResourceAttrSet(
-						"ethereum_contract_deployment.deploy", "contract_address"),
-				),
+				Check: checkContractDeployed(),
 			},
 		},
 	})
