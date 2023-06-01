@@ -93,8 +93,8 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 		return diag.FromErr(err)
 	}
 
-	var artifact *artifact
-	if err := json.Unmarshal(rawData, &artifact); err != nil {
+	artifact, err := decodeArtifact(rawData)
+	if err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -133,9 +133,32 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 
 type artifact struct {
 	Abi      *abi.ABI `json:"abi"`
-	Bytecode struct {
-		Object string `json:"object"`
-	} `json:"bytecode"`
+	Bytecode bytecode `json:"bytecode"`
+}
+
+type bytecode struct {
+	Object string `json:"object"`
+}
+
+type artifactHardhat struct {
+	Abi      *abi.ABI `json:"abi"`
+	Bytecode string
+}
+
+func decodeArtifact(data []byte) (*artifact, error) {
+	// first try to decode with the foundry artifact format
+	var fArtifact *artifact
+	if err := json.Unmarshal(data, &fArtifact); err == nil {
+		return fArtifact, nil
+	}
+
+	// try to decode with hardhat artifact format
+	var hArtifact artifactHardhat
+	if err := json.Unmarshal(data, &hArtifact); err == nil {
+		return &artifact{Abi: hArtifact.Abi, Bytecode: bytecode{Object: hArtifact.Bytecode}}, nil
+	}
+
+	return nil, fmt.Errorf("unknown artifact format")
 }
 
 func resourceContractDeploymentRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

@@ -42,3 +42,6 @@ terraform
 package
 examples
 cache
+
+node_modules
+build-info
