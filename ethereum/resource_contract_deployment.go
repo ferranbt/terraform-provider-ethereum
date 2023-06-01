@@ -108,7 +108,24 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 		if !ok {
 			return diag.FromErr(fmt.Errorf("no input set but required"))
 		}
-		xxx, err := cons.Inputs.Encode(input)
+
+		// convert any json input into a map struct
+		inputList := []interface{}{}
+		for _, val := range input.([]interface{}) {
+			valStr := val.(string)
+
+			if strings.HasPrefix(valStr, "{") {
+				var inputMap map[string]interface{}
+				if err := json.Unmarshal([]byte(valStr), &inputMap); err != nil {
+					return diag.FromErr(err)
+				}
+				inputList = append(inputList, inputMap)
+			} else {
+				inputList = append(inputList, valStr)
+			}
+		}
+
+		xxx, err := cons.Inputs.Encode(inputList)
 		if err != nil {
 			return diag.FromErr(err)
 		}
