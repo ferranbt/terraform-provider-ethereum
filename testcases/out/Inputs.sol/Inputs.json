@@ -1,0 +1,693 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addr",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_number",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_bytesI",
+          "type": "bytes32"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Inputs.Config",
+          "name": "_config",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "addr",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b5060405161019838038061019883398101604081905261002f91610060565b600080546001600160a01b0319166001600160a01b03959095169490941790935560035590516001556002556100f9565b600080600080848603608081121561007757600080fd5b85516001600160a01b038116811461008e57600080fd5b60208781015160408901519297509550909350605f19820112156100b157600080fd5b50604051602081016001600160401b03811182821017156100e257634e487b7160e01b600052604160045260246000fd5b604052606095909501518552509194909350909190565b6091806101076000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063767800de14602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea2646970667358221220328b8d5a243074e47f5e52d219d27feadfb5f033e0796ad25bdb0ec1b8aaa71464736f6c63430008130033",
+    "sourceMap": "64:389:0:-:0;;;222:229;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;354:4;:12;;-1:-1:-1;;;;;;354:12:0;-1:-1:-1;;;;;354:12:0;;;;;;;;;;;376:6;:16;402;;-1:-1:-1;402:16:0;-1:-1:-1;428:16:0;64:389;;14:901:2;133:6;141;149;157;201:9;192:7;188:23;231:3;227:2;223:12;220:32;;;248:1;245;238:12;220:32;274:16;;-1:-1:-1;;;;;319:31:2;;309:42;;299:70;;365:1;362;355:12;299:70;433:2;418:18;;;412:25;477:2;462:18;;456:25;388:5;;-1:-1:-1;412:25:2;-1:-1:-1;456:25:2;;-1:-1:-1;;;497:16:2;;493:25;490:45;;;531:1;528;521:12;490:45;-1:-1:-1;564:2:2;558:9;606:2;594:15;;-1:-1:-1;;;;;624:34:2;;660:22;;;621:62;618:185;;;725:10;720:3;716:20;713:1;706:31;760:4;757:1;750:15;788:4;785:1;778:15;618:185;819:2;812:22;879:2;864:18;;;;858:25;843:41;;-1:-1:-1;14:901:2;;;;-1:-1:-1;14:901:2;;850:6;14:901::o;:::-;64:389:0;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063767800de14602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea2646970667358221220328b8d5a243074e47f5e52d219d27feadfb5f033e0796ad25bdb0ec1b8aaa71464736f6c63430008130033",
+    "sourceMap": "64:389:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;86:19;;;;;-1:-1:-1;;;;;86:19:0;;;;;;-1:-1:-1;;;;;178:32:2;;;160:51;;148:2;133:18;86:19:0;;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "addr()": "767800de"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_number\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_bytesI\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"number\",\"type\":\"uint256\"}],\"internalType\":\"struct Inputs.Config\",\"name\":\"_config\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"addr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Inputs.sol\":\"Inputs\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"src/Inputs.sol\":{\"keccak256\":\"0x71d90c70b4f830b56bf6e73cb11674fbb4e7d653427c7f3e5807ab4c379299df\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://e271bc19a4a4928681eb86e1860fc845f6914e1b52557bb382adf5fb79e9960b\",\"dweb:/ipfs/QmeEK9coy4Yh1eNba2ddbK1pQfvSXZzKnwzphfRqyBHiq6\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.19+commit.7dd6d404"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_addr",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_bytesI",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "struct Inputs.Config",
+              "name": "_config",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "number",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "addr",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/Inputs.sol": "Inputs"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/Inputs.sol": {
+        "keccak256": "0x71d90c70b4f830b56bf6e73cb11674fbb4e7d653427c7f3e5807ab4c379299df",
+        "urls": [
+          "bzz-raw://e271bc19a4a4928681eb86e1860fc845f6914e1b52557bb382adf5fb79e9960b",
+          "dweb:/ipfs/QmeEK9coy4Yh1eNba2ddbK1pQfvSXZzKnwzphfRqyBHiq6"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/Inputs.sol",
+    "id": 44,
+    "exportedSymbols": {
+      "Inputs": [
+        43
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:415:0",
+    "nodes": [
+      {
+        "id": 1,
+        "nodeType": "PragmaDirective",
+        "src": "39:23:0",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".4"
+        ]
+      },
+      {
+        "id": 43,
+        "nodeType": "ContractDefinition",
+        "src": "64:389:0",
+        "nodes": [
+          {
+            "id": 3,
+            "nodeType": "VariableDeclaration",
+            "src": "86:19:0",
+            "nodes": [],
+            "constant": false,
+            "functionSelector": "767800de",
+            "mutability": "mutable",
+            "name": "addr",
+            "nameLocation": "101:4:0",
+            "scope": 43,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 2,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "86:7:0",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 6,
+            "nodeType": "VariableDeclaration",
+            "src": "111:13:0",
+            "nodes": [],
+            "constant": false,
+            "mutability": "mutable",
+            "name": "config",
+            "nameLocation": "118:6:0",
+            "scope": 43,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_Config_$13_storage",
+              "typeString": "struct Inputs.Config"
+            },
+            "typeName": {
+              "id": 5,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 4,
+                "name": "Config",
+                "nameLocations": [
+                  "111:6:0"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 13,
+                "src": "111:6:0"
+              },
+              "referencedDeclaration": 13,
+              "src": "111:6:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_Config_$13_storage_ptr",
+                "typeString": "struct Inputs.Config"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "id": 8,
+            "nodeType": "VariableDeclaration",
+            "src": "130:14:0",
+            "nodes": [],
+            "constant": false,
+            "mutability": "mutable",
+            "name": "number",
+            "nameLocation": "138:6:0",
+            "scope": 43,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "130:7:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "id": 10,
+            "nodeType": "VariableDeclaration",
+            "src": "150:14:0",
+            "nodes": [],
+            "constant": false,
+            "mutability": "mutable",
+            "name": "bytesI",
+            "nameLocation": "158:6:0",
+            "scope": 43,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 9,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "150:7:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "id": 13,
+            "nodeType": "StructDefinition",
+            "src": "171:45:0",
+            "nodes": [],
+            "canonicalName": "Inputs.Config",
+            "members": [
+              {
+                "constant": false,
+                "id": 12,
+                "mutability": "mutable",
+                "name": "number",
+                "nameLocation": "203:6:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 13,
+                "src": "195:14:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 11,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "195:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Config",
+            "nameLocation": "178:6:0",
+            "scope": 43,
+            "visibility": "public"
+          },
+          {
+            "id": 42,
+            "nodeType": "FunctionDefinition",
+            "src": "222:229:0",
+            "nodes": [],
+            "body": {
+              "id": 41,
+              "nodeType": "Block",
+              "src": "344:107:0",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 27,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 25,
+                      "name": "addr",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3,
+                      "src": "354:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 26,
+                      "name": "_addr",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15,
+                      "src": "361:5:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "354:12:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 28,
+                  "nodeType": "ExpressionStatement",
+                  "src": "354:12:0"
+                },
+                {
+                  "expression": {
+                    "id": 31,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 29,
+                      "name": "bytesI",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 10,
+                      "src": "376:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 30,
+                      "name": "_bytesI",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 19,
+                      "src": "385:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "376:16:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 32,
+                  "nodeType": "ExpressionStatement",
+                  "src": "376:16:0"
+                },
+                {
+                  "expression": {
+                    "id": 35,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 33,
+                      "name": "config",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 6,
+                      "src": "402:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Config_$13_storage",
+                        "typeString": "struct Inputs.Config storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 34,
+                      "name": "_config",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22,
+                      "src": "411:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Config_$13_memory_ptr",
+                        "typeString": "struct Inputs.Config memory"
+                      }
+                    },
+                    "src": "402:16:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Config_$13_storage",
+                      "typeString": "struct Inputs.Config storage ref"
+                    }
+                  },
+                  "id": 36,
+                  "nodeType": "ExpressionStatement",
+                  "src": "402:16:0"
+                },
+                {
+                  "expression": {
+                    "id": 39,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 37,
+                      "name": "number",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 8,
+                      "src": "428:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 38,
+                      "name": "_number",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 17,
+                      "src": "437:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "428:16:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 40,
+                  "nodeType": "ExpressionStatement",
+                  "src": "428:16:0"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 23,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15,
+                  "mutability": "mutable",
+                  "name": "_addr",
+                  "nameLocation": "251:5:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42,
+                  "src": "243:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 14,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "243:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 17,
+                  "mutability": "mutable",
+                  "name": "_number",
+                  "nameLocation": "274:7:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42,
+                  "src": "266:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "266:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 19,
+                  "mutability": "mutable",
+                  "name": "_bytesI",
+                  "nameLocation": "299:7:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42,
+                  "src": "291:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 18,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "291:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 22,
+                  "mutability": "mutable",
+                  "name": "_config",
+                  "nameLocation": "330:7:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42,
+                  "src": "316:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Config_$13_memory_ptr",
+                    "typeString": "struct Inputs.Config"
+                  },
+                  "typeName": {
+                    "id": 21,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 20,
+                      "name": "Config",
+                      "nameLocations": [
+                        "316:6:0"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 13,
+                      "src": "316:6:0"
+                    },
+                    "referencedDeclaration": 13,
+                    "src": "316:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Config_$13_storage_ptr",
+                      "typeString": "struct Inputs.Config"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "233:110:0"
+            },
+            "returnParameters": {
+              "id": 24,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "344:0:0"
+            },
+            "scope": 43,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Inputs",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          43
+        ],
+        "name": "Inputs",
+        "nameLocation": "73:6:0",
+        "scope": 44,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 0
+}
