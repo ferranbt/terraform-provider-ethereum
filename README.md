@@ -30,8 +30,7 @@ Deploy a contract:
 resource "ethereum_contract_deployment" "contract" {
   signer = data.ethereum_eoa.account.signer
 
-  artifact_path     = "../package/artifacts"
-  artifact_contract = "Proxy"
+  artifact = "../package/artifacts:Proxy"
 
   input = [
     "0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5"

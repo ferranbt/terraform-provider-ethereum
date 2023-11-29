@@ -3,7 +3,7 @@ package ethereum
 import (
 	"context"
 	"encoding/hex"
-	"math/big"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,16 +15,41 @@ func TransactionResource() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"to": {
 				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+			},
+			"artifact": {
+				Type:     schema.TypeString,
+				Required: false,
+				Optional: true,
+				ForceNew: true,
+			},
+			"method": {
+				Type:     schema.TypeString,
+				Required: false,
 				Optional: true,
 				ForceNew: true,
 			},
 			"input": {
+				Type:     schema.TypeList,
+				Optional: true,
+				ForceNew: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"gas_limit": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				ForceNew: true,
+			},
+			"raw_input": {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
 			},
 			"value": {
-				Type:     schema.TypeFloat,
+				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
 			},
@@ -35,6 +60,10 @@ func TransactionResource() *schema.Resource {
 			},
 			"hash": {
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"block_num": {
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"gas_used": {
@@ -63,12 +92,50 @@ func resourceTransactionCreate(ctx context.Context, d *schema.ResourceData, meta
 		txn.To = &addr
 	}
 	if val, ok := d.GetOk("value"); ok {
-		txn.Value = new(big.Int).SetInt64(int64(val.(float64)))
+		txn.Value, err = parseEtherValue(val.(string))
+		if err != nil {
+			return diag.FromErr(fmt.Errorf("failed to parse transfer value '%s': %v", val.(string), err))
+		}
 	}
-	if val, ok := d.GetOk("input"); ok {
+	if val, ok := d.GetOk("raw_input"); ok {
 		buf, err := hex.DecodeString(val.(string))
 		if err != nil {
 			return diag.FromErr(err)
+		}
+		txn.Input = buf
+	}
+	if val, ok := d.GetOk("gas_limit"); ok {
+		gasLimit := val.(int)
+		if gasLimit < 0 {
+			return diag.FromErr(fmt.Errorf("gas limit cannot be less than 0 but %d found", gasLimit))
+		}
+		txn.GasLimit = uint64(gasLimit)
+	}
+	if val, ok := d.GetOk("artifact"); ok {
+		artifact, err := resolveContract(val.(string))
+		if err != nil {
+			return diag.FromErr(err)
+		}
+
+		var inputs interface{}
+		if rawInputs, ok := d.GetOk("input"); ok {
+			inputs, err = decodeInputs(rawInputs)
+			if err != nil {
+				return diag.FromErr(fmt.Errorf("failed to decode inputs: %v", err))
+			}
+		} else {
+			inputs = []interface{}{}
+		}
+
+		methodName := d.Get("method").(string)
+		method, ok := artifact.Abi.Methods[methodName]
+		if !ok {
+			return diag.FromErr(fmt.Errorf("method '%s' not found", methodName))
+		}
+
+		buf, err := method.Encode(inputs)
+		if err != nil {
+			return diag.FromErr(fmt.Errorf("failed to abi encode: %v", err))
 		}
 		txn.Input = buf
 	}
@@ -82,11 +149,25 @@ func resourceTransactionCreate(ctx context.Context, d *schema.ResourceData, meta
 	d.SetId(hash.String())
 	d.Set("hash", hash.String())
 	d.Set("gas_used", receipt.GasUsed)
+	d.Set("block_num", int(receipt.BlockNumber))
 
 	return nil
 }
 
 func resourceTransactionRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	client := meta.(*client)
+
+	hash := d.Id()
+	receipt, err := client.Http().GetTransactionReceipt(ethgo.HexToHash(hash))
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	d.SetId(hash)
+	d.Set("hash", hash)
+	d.Set("gas_used", receipt.GasUsed)
+	d.Set("block_num", int(receipt.BlockNumber))
+
 	return nil
 }
 

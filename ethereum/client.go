@@ -36,10 +36,11 @@ func (c *client) Http() *jsonrpc.Eth {
 }
 
 type transaction struct {
-	To     *ethgo.Address
-	Input  []byte
-	Value  *big.Int
-	Signer []byte
+	To       *ethgo.Address
+	Input    []byte
+	Value    *big.Int
+	Signer   []byte
+	GasLimit uint64
 }
 
 func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, error) {
@@ -58,12 +59,14 @@ func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, 
 
 	gasPrice, err := c.httpClient.Eth().GasPrice()
 	if err != nil {
-		return ethgo.Hash{}, nil, err
+		return ethgo.Hash{}, nil, fmt.Errorf("failed to get gas price: %v", err)
 	}
 
-	gasLimit, err := c.httpClient.Eth().EstimateGas(&ethgo.CallMsg{To: txn.To, Data: txn.Input, Value: txn.Value})
-	if err != nil {
-		return ethgo.Hash{}, nil, err
+	if txn.GasLimit == 0 {
+		txn.GasLimit, err = c.httpClient.Eth().EstimateGas(&ethgo.CallMsg{To: txn.To, Data: txn.Input, Value: txn.Value})
+		if err != nil {
+			return ethgo.Hash{}, nil, fmt.Errorf("gas estimation failed: %v", err)
+		}
 	}
 
 	c.nonceLock.Lock()
@@ -77,8 +80,8 @@ func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, 
 		Input:    txn.Input,
 		To:       txn.To,
 		Value:    txn.Value,
+		Gas:      txn.GasLimit,
 		GasPrice: gasPrice,
-		Gas:      gasLimit,
 		Nonce:    nonce,
 	}
 
@@ -98,7 +101,7 @@ func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, 
 
 	c.nonceLock.Unlock()
 
-	tt := time.NewTimer(5 * time.Second)
+	tt := time.NewTimer(15 * time.Second)
 	for {
 		select {
 		case <-time.After(100 * time.Millisecond):

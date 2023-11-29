@@ -23,11 +23,13 @@ func Provider() *schema.Provider {
 			"ethereum_eoa":   datasourceEoa(),
 			"ethereum_block": datasourceBlock(),
 			"ethereum_ens":   datasourceENS(),
+			"ethereum_event": datasourceEvent(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
 			"ethereum_transaction":         TransactionResource(),
 			"ethereum_contract_deployment": ContractDeploymentResource(),
+			"ethereum_eoa":                 EOAResource(),
 		},
 	}
 
