@@ -22,4 +22,26 @@ contract Inputs {
         config = _config;
         number = _number;
     }
+
+    function applyFunc(
+        address _addr,
+        uint256 _number,
+        bytes32 _bytesI,
+        Config memory _config
+    ) public payable {
+        addr = _addr;
+        bytesI = _bytesI;
+        config = _config;
+        number = _number;
+    }
+}
+
+contract WithEvents {
+    event One(
+        uint64 num
+    );
+
+    function applyFunc() public {
+        emit One(1);
+    }
 }
