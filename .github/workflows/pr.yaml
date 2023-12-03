@@ -14,6 +14,10 @@ jobs:
         env:
           FORK_URL: ${{ secrets.FORK_URL }}
         run: make devnet-up
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Build contracts
+        run: cd testcases && forge build
       - name: Unit test
         run: make test
       - name: Acceptance tests
