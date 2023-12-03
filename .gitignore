@@ -45,3 +45,6 @@ cache
 
 node_modules
 build-info
+
+./testcases/out
+./testcases/cache
