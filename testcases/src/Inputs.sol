@@ -45,3 +45,13 @@ contract WithEvents {
         emit One(1);
     }
 }
+
+contract Call {
+    function multipleOutput() public pure returns (uint64, uint64) {
+        return (1, 2);
+    }
+
+    function singleOutput() public pure returns (uint64) {
+        return 1;
+    }
+}
