@@ -24,6 +24,7 @@ func Provider() *schema.Provider {
 			"ethereum_block": datasourceBlock(),
 			"ethereum_ens":   datasourceENS(),
 			"ethereum_event": datasourceEvent(),
+			"ethereum_call":  datasourceCall(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{

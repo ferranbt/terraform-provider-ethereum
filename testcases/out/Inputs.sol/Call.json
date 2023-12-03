@@ -1,40 +1,52 @@
 {
   "abi": [
     {
-      "anonymous": false,
-      "inputs": [
+      "inputs": [],
+      "name": "multipleOutput",
+      "outputs": [
         {
-          "indexed": false,
           "internalType": "uint64",
-          "name": "num",
+          "name": "",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint64",
+          "name": "",
           "type": "uint64"
         }
       ],
-      "name": "One",
-      "type": "event"
+      "stateMutability": "pure",
+      "type": "function"
     },
     {
       "inputs": [],
-      "name": "applyFunc",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "name": "singleOutput",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "pure",
       "type": "function"
     }
   ],
   "bytecode": {
-    "object": "0x6080604052348015600f57600080fd5b5060a18061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063724ae5fd14602d575b600080fd5b60336035565b005b604051600181527fd5574cbede10eb2cd6a49686f59247a18c7a0da223f457c21978ad930a6440369060200160405180910390a156fea26469706673582212209c10212adee43027cdf70704d9a5c54e9e342033e942b578b9ebf8457a6925b264736f6c63430008130033",
-    "sourceMap": "712:126:0:-:0;;;;;;;;;;;;;;;;;;;",
+    "object": "0x6080604052348015600f57600080fd5b5060958061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c80639cb1637c146037578063d58df8a814604b575b600080fd5b604051600181526020015b60405180910390f35b60408051600181526002602082015201604256fea26469706673582212204afa6cf15b9a04441336e24a7eef599b219ba06c41dc87069e1b6c265f33dda864736f6c63430008130033",
+    "sourceMap": "840:199:0:-:0;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063724ae5fd14602d575b600080fd5b60336035565b005b604051600181527fd5574cbede10eb2cd6a49686f59247a18c7a0da223f457c21978ad930a6440369060200160405180910390a156fea26469706673582212209c10212adee43027cdf70704d9a5c54e9e342033e942b578b9ebf8457a6925b264736f6c63430008130033",
-    "sourceMap": "712:126:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;780:56;;;:::i;:::-;;;823:6;;827:1;167:50:1;;823:6:0;;155:2:1;140:18;823:6:0;;;;;;;780:56::o",
+    "object": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c80639cb1637c146037578063d58df8a814604b575b600080fd5b604051600181526020015b60405180910390f35b60408051600181526002602082015201604256fea26469706673582212204afa6cf15b9a04441336e24a7eef599b219ba06c41dc87069e1b6c265f33dda864736f6c63430008130033",
+    "sourceMap": "840:199:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;959:78;;;1029:1;158:50:1;;146:2;131:18;959:78:0;;;;;;;;860:93;;;;941:1;426:34:1;;944:1:0;491:2:1;476:18;;469:43;362:18;860:93:0;219:299:1",
     "linkReferences": {}
   },
   "methodIdentifiers": {
-    "applyFunc()": "724ae5fd"
+    "multipleOutput()": "d58df8a8",
+    "singleOutput()": "9cb1637c"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"num\",\"type\":\"uint64\"}],\"name\":\"One\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"applyFunc\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Inputs.sol\":\"WithEvents\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"src/Inputs.sol\":{\"keccak256\":\"0xe37bfa4d3458ceac7de86dd1822183ca71a7840f6a891a612057c62a636f5ecd\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://23cfbe6863b88595e44f6ca0784d53fab96ef15e112a0814a1a958b1caedcdb7\",\"dweb:/ipfs/QmVwTposT8WdEXQAcsyhjP5vDAmtmVGjvDWSK7tCQca8f2\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"multipleOutput\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"singleOutput\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Inputs.sol\":\"Call\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"src/Inputs.sol\":{\"keccak256\":\"0xe37bfa4d3458ceac7de86dd1822183ca71a7840f6a891a612057c62a636f5ecd\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://23cfbe6863b88595e44f6ca0784d53fab96ef15e112a0814a1a958b1caedcdb7\",\"dweb:/ipfs/QmVwTposT8WdEXQAcsyhjP5vDAmtmVGjvDWSK7tCQca8f2\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -43,23 +55,35 @@
     "output": {
       "abi": [
         {
-          "inputs": [
+          "inputs": [],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "multipleOutput",
+          "outputs": [
             {
               "internalType": "uint64",
-              "name": "num",
-              "type": "uint64",
-              "indexed": false
+              "name": "",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "",
+              "type": "uint64"
             }
-          ],
-          "type": "event",
-          "name": "One",
-          "anonymous": false
+          ]
         },
         {
           "inputs": [],
-          "stateMutability": "nonpayable",
+          "stateMutability": "pure",
           "type": "function",
-          "name": "applyFunc"
+          "name": "singleOutput",
+          "outputs": [
+            {
+              "internalType": "uint64",
+              "name": "",
+              "type": "uint64"
+            }
+          ]
         }
       ],
       "devdoc": {
@@ -83,7 +107,7 @@
         "bytecodeHash": "ipfs"
       },
       "compilationTarget": {
-        "src/Inputs.sol": "WithEvents"
+        "src/Inputs.sol": "Call"
       },
       "libraries": {}
     },
