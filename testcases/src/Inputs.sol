@@ -37,9 +37,7 @@ contract Inputs {
 }
 
 contract WithEvents {
-    event One(
-        uint64 num
-    );
+    event One(uint64 num);
 
     function applyFunc() public {
         emit One(1);

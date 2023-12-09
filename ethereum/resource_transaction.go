@@ -8,6 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/umbracle/ethgo"
+	"github.com/umbracle/ethgo/abi"
 )
 
 func TransactionResource() *schema.Resource {
@@ -23,12 +24,34 @@ func TransactionResource() *schema.Resource {
 				Required: false,
 				Optional: true,
 				ForceNew: true,
+				RequiredWith: []string{
+					"method",
+				},
+				ConflictsWith: []string{
+					"function",
+				},
 			},
 			"method": {
 				Type:     schema.TypeString,
 				Required: false,
 				Optional: true,
 				ForceNew: true,
+				RequiredWith: []string{
+					"artifact",
+				},
+				ConflictsWith: []string{
+					"function",
+				},
+			},
+			"function": {
+				Type:     schema.TypeString,
+				Required: false,
+				Optional: true,
+				ForceNew: true,
+				ConflictsWith: []string{
+					"artifact",
+					"method",
+				},
 			},
 			"input": {
 				Type:     schema.TypeList,
@@ -111,12 +134,27 @@ func resourceTransactionCreate(ctx context.Context, d *schema.ResourceData, meta
 		}
 		txn.GasLimit = uint64(gasLimit)
 	}
+
+	var method *abi.Method
+
 	if val, ok := d.GetOk("artifact"); ok {
 		artifact, err := resolveContract(val.(string))
 		if err != nil {
 			return diag.FromErr(err)
 		}
+		methodName := d.Get("method").(string)
+		method, ok = artifact.Abi.Methods[methodName]
+		if !ok {
+			return diag.FromErr(fmt.Errorf("method '%s' not found", methodName))
+		}
+	}
+	if val, ok := d.GetOk("function"); ok {
+		if method, err = abi.NewMethod(val.(string)); err != nil {
+			return diag.FromErr(fmt.Errorf("failed to parse function '%s': %v", val.(string), err))
+		}
+	}
 
+	if method != nil {
 		var inputs interface{}
 		if rawInputs, ok := d.GetOk("input"); ok {
 			inputs, err = decodeInputs(rawInputs)
@@ -125,12 +163,6 @@ func resourceTransactionCreate(ctx context.Context, d *schema.ResourceData, meta
 			}
 		} else {
 			inputs = []interface{}{}
-		}
-
-		methodName := d.Get("method").(string)
-		method, ok := artifact.Abi.Methods[methodName]
-		if !ok {
-			return diag.FromErr(fmt.Errorf("method '%s' not found", methodName))
 		}
 
 		buf, err := method.Encode(inputs)

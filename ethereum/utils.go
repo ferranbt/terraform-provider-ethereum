@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/umbracle/ethgo"
 	"github.com/umbracle/ethgo/abi"
 )
 
@@ -125,24 +124,42 @@ func decodeInputs(input interface{}) (interface{}, error) {
 
 	return input, nil
 }
+func convert(val float64, decimals int64) *big.Int {
+	// Convert the float64 to a big.Float
+	v := new(big.Float).SetFloat64(val)
 
-var unitSuffixesFn = map[string]func(i uint64) *big.Int{
-	" gwei":  ethgo.Gwei,
-	" ether": ethgo.Ether,
+	// Calculate the multiplier (10^decimals)
+	exp := new(big.Float).SetInt(new(big.Int).Exp(big.NewInt(10), big.NewInt(decimals), nil))
+
+	// Multiply the value by the multiplier
+	result := new(big.Float).Mul(v, exp)
+
+	// Convert the result to a *big.Int
+	intResult, _ := result.Int(nil)
+	return intResult
+}
+
+var unitSuffixesFn = map[string]func(i float64) *big.Int{
+	" gwei": func(i float64) *big.Int {
+		return convert(i, 9)
+	},
+	" ether": func(i float64) *big.Int {
+		return convert(i, 18)
+	},
 }
 
 func parseEtherValue(i string) (*big.Int, error) {
 	for p, fn := range unitSuffixesFn {
 		if strings.HasSuffix(i, p) {
-			// try to decode the value as uint64 and apply the function
-			num, err := strconv.Atoi(strings.TrimSuffix(i, p))
+			// try to decode the value as float and apply the function
+			num, err := strconv.ParseFloat(strings.TrimSuffix(i, p), 64)
 			if err != nil {
 				return nil, err
 			}
 			if num < 0 {
 				return nil, fmt.Errorf("cannot be lower than zero")
 			}
-			return fn(uint64(num)), nil
+			return fn(num), nil
 		}
 	}
 

@@ -20,11 +20,12 @@ func Provider() *schema.Provider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"ethereum_eoa":   datasourceEoa(),
-			"ethereum_block": datasourceBlock(),
-			"ethereum_ens":   datasourceENS(),
-			"ethereum_event": datasourceEvent(),
-			"ethereum_call":  datasourceCall(),
+			"ethereum_eoa":         datasourceEoa(),
+			"ethereum_block":       datasourceBlock(),
+			"ethereum_ens":         datasourceENS(),
+			"ethereum_event":       datasourceEvent(),
+			"ethereum_call":        datasourceCall(),
+			"ethereum_getGasPrice": datasourceGetGasPrice(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{

@@ -63,7 +63,7 @@ func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, 
 	}
 
 	if txn.GasLimit == 0 {
-		txn.GasLimit, err = c.httpClient.Eth().EstimateGas(&ethgo.CallMsg{To: txn.To, Data: txn.Input, Value: txn.Value})
+		txn.GasLimit, err = c.httpClient.Eth().EstimateGas(&ethgo.CallMsg{From: key.Address(), To: txn.To, Data: txn.Input, Value: txn.Value})
 		if err != nil {
 			return ethgo.Hash{}, nil, fmt.Errorf("gas estimation failed: %v", err)
 		}
