@@ -2,5 +2,6 @@ version: "3.7"
 services:
   anvil:
     image: "ghcr.io/foundry-rs/foundry:latest"
-    command: ["anvil --block-time 1 --fork-url ${FORK_URL}"]
-    network_mode: "host"
+    command: ["anvil --block-time 1 --host 0.0.0.0 --fork-url ${FORK_URL}"]
+    ports:
+      - "8545:8545"
