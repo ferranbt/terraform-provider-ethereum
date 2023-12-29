@@ -7,9 +7,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func datasourceHTTPProvider() *schema.Resource {
+func datasourceProvider() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: datasourceHTTPProviderProviderRead,
+		ReadContext: datasourceProviderProviderRead,
 		Schema: map[string]*schema.Schema{
 			"url": {
 				Type:     schema.TypeString,
@@ -25,7 +25,7 @@ func datasourceHTTPProvider() *schema.Resource {
 	}
 }
 
-func datasourceHTTPProviderProviderRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func datasourceProviderProviderRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	url := d.Get("url").(string)
 
 	clt, err := newClient(url)

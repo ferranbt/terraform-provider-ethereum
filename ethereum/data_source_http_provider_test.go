@@ -13,13 +13,13 @@ func TestDatasource_HTTPProvider(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: `
-				data "ethereum_http_provider" "network" {
+				data "ethereum_provider" "network" {
 					url = "http://localhost:8545"
 				}
 				`,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
-						"data.ethereum_http_provider.network", "chain_id", "5"),
+						"data.ethereum_provider.network", "chain_id", "5"),
 				),
 			},
 		},
