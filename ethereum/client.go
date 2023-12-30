@@ -66,10 +66,6 @@ func (c *client) sendTransaction(txn *transaction) (ethgo.Hash, *ethgo.Receipt, 
 	}
 
 	if txn.GasLimit == 0 {
-		fmt.Println("data", from, txn.To, txn.Input, txn.Value)
-
-		fmt.Println(c.httpClient.Eth().GetBalance(from, ethgo.Latest))
-
 		msg := &ethgo.CallMsg{From: from, To: txn.To, Data: txn.Input, GasPrice: gasPrice, Value: txn.Value}
 		txn.GasLimit, err = c.httpClient.Eth().EstimateGas(msg)
 		if err != nil {
