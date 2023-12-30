@@ -12,6 +12,10 @@ func checkContractDeployed() resource.TestCheckFunc {
 			"ethereum_contract_deployment.deploy", "hash"),
 		resource.TestCheckResourceAttrSet(
 			"ethereum_contract_deployment.deploy", "contract_address"),
+		resource.TestCheckResourceAttrSet(
+			"ethereum_contract_deployment.deploy", "gas_used"),
+		resource.TestCheckResourceAttrSet(
+			"ethereum_contract_deployment.deploy", "block_num"),
 	)
 }
 
