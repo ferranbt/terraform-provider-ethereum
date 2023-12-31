@@ -1,9 +1,12 @@
 package ethereum
 
 import (
+	"context"
+	"fmt"
 	"math/big"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 	"github.com/umbracle/ethgo"
@@ -82,4 +85,211 @@ func TestClient_SendTransaction_Concurrent(t *testing.T) {
 	balance, err := clt.Http().GetBalance(target, ethgo.Latest)
 	require.NoError(t, err)
 	require.Equal(t, balance, new(big.Int).Mul(sendBalance, new(big.Int).SetInt64(int64(num))))
+}
+
+func TestTransactionFilter_RunSimple(t *testing.T) {
+	blockNums := uint64(10)
+
+	mock := &mockTransactionFilterClient{
+		ch: make(chan uint64),
+	}
+	mock.move(blockNums)
+
+	mngr := &transactionFilter{
+		input: filterTransactionInput{
+			StartBlock: 1,
+		},
+		clt:        mock,
+		waitPeriod: 1 * time.Second,
+	}
+
+	go mngr.run(context.Background())
+
+	// wait the initial batch of 'blockNums'
+	count := uint64(1)
+	for ; count < blockNums; count++ {
+		num := <-mock.ch
+		require.Equal(t, num, count)
+	}
+
+	// move the chain and wait for the result
+	mock.move(5)
+
+	for ; count < blockNums+5; count++ {
+		num := <-mock.ch
+		require.Equal(t, num, count)
+	}
+}
+
+func uintPtr(n uint64) *uint64 {
+	return &n
+}
+
+func TestTransactionFilter_LimitBatch(t *testing.T) {
+	mock := &mockTransactionFilterClient{}
+	mock.move(1000)
+
+	mngr := &transactionFilter{
+		input: filterTransactionInput{
+			StartBlock:  10,
+			LimitBlocks: uintPtr(100),
+		},
+		clt: mock,
+	}
+	mngr.run(context.Background())
+
+	// the latest queried block should be 110 (start + limit)
+	require.Equal(t, uint64(110), mock.latestQueried)
+}
+
+func TestTransactionFilter_LimitWatch(t *testing.T) {
+	mock := &mockTransactionFilterClient{}
+	mock.move(20)
+
+	mngr := &transactionFilter{
+		clt:        mock,
+		waitPeriod: 1 * time.Second,
+		input: filterTransactionInput{
+			StartBlock:  10,
+			LimitBlocks: uintPtr(20),
+		},
+	}
+
+	doneCh := make(chan struct{})
+	go func() {
+		mngr.run(context.Background())
+		close(doneCh)
+	}()
+
+	// mine enough blocks for the process to reach the limit
+	// and wait for it to finish
+	mock.move(20)
+
+	<-doneCh
+	require.Equal(t, uint64(30), mock.latestQueried)
+}
+
+type mockTransactionFilterClient struct {
+	lock          sync.Mutex
+	blocks        uint64
+	ch            chan uint64
+	latestQueried uint64
+}
+
+func (m *mockTransactionFilterClient) move(n uint64) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	m.blocks += n
+}
+
+func (m *mockTransactionFilterClient) GetBlockByNumber(i ethgo.BlockNumber, full bool) (*ethgo.Block, error) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	if i == ethgo.Latest {
+		return &ethgo.Block{
+			Number: m.blocks,
+		}, nil
+	}
+
+	num := uint64(i)
+	if num > m.blocks {
+		return nil, fmt.Errorf("block not found")
+	}
+
+	m.latestQueried = num
+	if m.ch != nil {
+		m.ch <- num
+	}
+
+	return &ethgo.Block{
+		Number: num,
+	}, nil
+}
+
+func TestTransactionFilter_ValidateInput(t *testing.T) {
+	txn1 := &ethgo.Transaction{
+		From:  ethgo.Address{0x1},
+		To:    &ethgo.Address{0x2},
+		Value: big.NewInt(100),
+	}
+
+	trueVal := true
+	falseVal := false
+
+	var cases = []struct {
+		txn   *ethgo.Transaction
+		input filterTransactionInput
+		valid bool
+	}{
+		{
+			// to is invalid
+			txn: txn1,
+			input: filterTransactionInput{
+				From: &ethgo.Address{0x1},
+			},
+			valid: true,
+		},
+		{
+			// from is invalid
+			txn: txn1,
+			input: filterTransactionInput{
+				From: &ethgo.Address{0x2},
+			},
+			valid: false,
+		},
+		{
+			// to is invalid
+			txn: txn1,
+			input: filterTransactionInput{
+				To: &ethgo.Address{0x1},
+			},
+			valid: false,
+		},
+		{
+			// to is not set
+			txn: &ethgo.Transaction{},
+			input: filterTransactionInput{
+				To: &ethgo.Address{0x1},
+			},
+			valid: false,
+		},
+		{
+			// to is valid
+			txn: txn1,
+			input: filterTransactionInput{
+				To: &ethgo.Address{0x2},
+			},
+			valid: true,
+		},
+		{
+			// value is set
+			txn: txn1,
+			input: filterTransactionInput{
+				IsTransfer: &trueVal,
+			},
+			valid: true,
+		},
+		{
+			// value is not-set
+			txn: &ethgo.Transaction{},
+			input: filterTransactionInput{
+				IsTransfer: &trueVal,
+			},
+			valid: false,
+		},
+		{
+			// value should not be set
+			txn: &ethgo.Transaction{},
+			input: filterTransactionInput{
+				IsTransfer: &falseVal,
+			},
+			valid: true,
+		},
+	}
+
+	for _, c := range cases {
+		require.Equal(t, c.valid, validateTxn(c.txn, c.input))
+	}
 }
