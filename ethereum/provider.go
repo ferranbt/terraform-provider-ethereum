@@ -25,6 +25,7 @@ func Provider() *schema.Provider {
 			"ethereum_ens":                datasourceENS(),
 			"ethereum_event":              datasourceEvent(),
 			"ethereum_call":               datasourceCall(),
+			"ethereum_gas_price":          datasourceGetGasPrice(),
 			"ethereum_transaction":        datasourceTransaction(),
 			"ethereum_filter_transaction": datasourceFilterTransaction(),
 		},
