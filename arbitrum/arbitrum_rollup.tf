@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "ethereum" {
-  host = "https://arbitrum-sepolia.infura.io/v3/d0181f4c9e474c98921e856804aea3f2"
+  host = "https://arbitrum-sepolia.infura.io/v3/47333b705ded484d8a9aac09b71b36bb"
   // host = "http://localhost:8545"
 }
 
@@ -26,12 +26,18 @@ provider "ethereum" {
 
 variable "chainId" {
   type    = number
-  default = 3453943831
+  default = 3666643831
 }
 
 variable "minL2BaseFee" {
   type    = number
   default = 100000000
+}
+
+// local variables for sepolia
+locals {
+  rollup_creator_addr = "0x06e341073b2749e0bb9912461351f716decda9b0"
+  bridge_creator_addr = "0xb462c69f8f638d2954c9618b03765fc1770190cf"
 }
 
 data "ethereum_eoa" "account" {
@@ -54,7 +60,7 @@ resource "ethereum_transaction" "create_rollup" {
 
   artifact = "./artifacts:RollupCreator"
   method   = "createRollup"
-  to       = "0x06e341073b2749e0bb9912461351f716decda9b0"
+  to       = local.rollup_creator_addr
 
   input = [
     jsonencode({
@@ -101,27 +107,25 @@ data "ethereum_event" "rollupInitialized" {
   event    = "RollupInitialized"
 }
 
-/*
 resource "ethereum_transaction" "create_bridge" {
-	signer = data.ethereum_eoa.account.signer
+  signer = data.ethereum_eoa.account.signer
 
-  	artifact = "./artifacts:BridgeCreator"
-  	method = "createTokenBridge"
-  	to = "0x1c608642d0944e95957a7ac3a478ec17fa191e9a"
+  artifact = "./artifacts:BridgeCreator"
+  method   = "createTokenBridge"
+  to       = locals.bridge_creator_addr
 
-	// TODO: Gas estimation fails?
-	gas_limit = 40452528
-	// TODO: Why this value transfer?
-	value = "37307785000000000"
+  // TODO: Gas estimation fails?
+  gas_limit = 40452528
+  // TODO: Why this value transfer?
+  value = "37307785000000000"
 
-	input = [
-		"${data.ethereum_event.rollupCreated.logs.inboxAddress}",
-		"${data.ethereum_eoa.account.address}",
-		"30452528", // This is hardcoded
-		"100000000"
-	]
+  input = [
+    "${data.ethereum_event.rollupCreated.logs.inboxAddress}",
+    "${data.ethereum_eoa.account.address}",
+    "30452528", // This is hardcoded
+    "100000000"
+  ]
 }
-*/
 
 resource "local_file" "foo" {
   content = templatefile("${path.module}/nodeConfig.json.tpl", {
@@ -188,7 +192,6 @@ resource "ethereum_transaction" "fundSignerOnL3" {
   function = "function depositEth() public payable"
   value    = "0.1 ether"
 }
-*/
 
 resource "ethereum_transaction" "setMinimumL2BaseFee" {
   provider = "ethereum.l3"
@@ -250,5 +253,5 @@ resource "ethereum_transaction" "setL1PricePerUnit" {
     tonumber(data.ethereum_call.getL1BaseFeeEstimate.output.0) + data.ethereum_getGasPrice.gas_price.gas_price
   ]
 }
-
+*/
 // -- transfer ownership --
