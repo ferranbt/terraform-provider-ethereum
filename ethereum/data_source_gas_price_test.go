@@ -18,7 +18,7 @@ func TestAccGetGasPrice(t *testing.T) {
 				`,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(
-						"data.ethereum_getGasPrice.gas_price", "gas_price"),
+						"data.ethereum_gas_price.gas_price", "gas_price"),
 				),
 			},
 		},
