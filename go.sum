@@ -236,8 +236,8 @@ github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PK
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/tyler-smith/go-bip39 v1.1.0 h1:5eUemwrMargf3BSLRRCalXT93Ns6pQJIjYQN2nyfOP8=
 github.com/tyler-smith/go-bip39 v1.1.0/go.mod h1:gUYDtqQw1JS3ZJ8UWVcGTGqqr6YIN3CWg+kkNaLt55U=
-github.com/umbracle/ethgo v0.1.4-0.20240102111615-2a3d9c0e4abc h1:AhAbp6AguvoJpmx0S1HvgUgSsYDRsRETu/F7HwtQWwY=
-github.com/umbracle/ethgo v0.1.4-0.20240102111615-2a3d9c0e4abc/go.mod h1:J+OZNfRCtbaYW3AEc0m47GhwAzlNJjcr9vO86nzOr6E=
+github.com/umbracle/ethgo v0.1.4-0.20240102125626-68e48cf58add h1:Ct4zedUu3rFHTQqvcawtanZf68gIXqCPjaniKNWgXng=
+github.com/umbracle/ethgo v0.1.4-0.20240102125626-68e48cf58add/go.mod h1:J+OZNfRCtbaYW3AEc0m47GhwAzlNJjcr9vO86nzOr6E=
 github.com/umbracle/fastrlp v0.0.0-20220527094140-59d5dd30e722 h1:10Nbw6cACsnQm7r34zlpJky+IzxVLRk6MKTS2d3Vp0E=
 github.com/umbracle/fastrlp v0.0.0-20220527094140-59d5dd30e722/go.mod h1:c8J0h9aULj2i3umrfyestM6jCq0LK0U6ly6bWy96nd4=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=

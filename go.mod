@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.26.1
 	github.com/hashicorp/terraform-plugin-testing v1.2.0
 	github.com/stretchr/testify v1.8.0
-	github.com/umbracle/ethgo v0.1.4-0.20240102111615-2a3d9c0e4abc
+	github.com/umbracle/ethgo v0.1.4-0.20240102125626-68e48cf58add
 )
 
 require (

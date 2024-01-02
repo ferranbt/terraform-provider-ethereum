@@ -136,6 +136,7 @@ type filterTransactionInput struct {
 	From        *ethgo.Address
 	To          *ethgo.Address
 	IsTransfer  *bool
+	TxnType     *uint8
 	StartBlock  uint64
 	LimitBlocks *uint64
 }
@@ -223,8 +224,13 @@ func validateTxn(txn *ethgo.Transaction, input filterTransactionInput) bool {
 			return false
 		}
 	}
+	if input.TxnType != nil {
+		if *input.TxnType != uint8(txn.Type) {
+			return false
+		}
+	}
 	if input.IsTransfer != nil {
-		isTranfer := txn.Value == nil || txn.Value.Sign() != 0
+		isTranfer := txn.Value != nil && txn.Value.Sign() != 0
 		wantTransfer := *input.IsTransfer
 		if wantTransfer && !isTranfer {
 			return false

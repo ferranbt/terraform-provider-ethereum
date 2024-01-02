@@ -10,7 +10,6 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/umbracle/ethgo"
-	"github.com/umbracle/ethgo/jsonrpc"
 	"github.com/umbracle/ethgo/wallet"
 )
 
@@ -222,10 +221,12 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 		From:  ethgo.Address{0x1},
 		To:    &ethgo.Address{0x2},
 		Value: big.NewInt(100),
+		Type:  ethgo.TransactionType(1),
 	}
 
 	trueVal := true
 	falseVal := false
+	typ1 := uint8(1)
 
 	var cases = []struct {
 		txn   *ethgo.Transaction
@@ -296,26 +297,17 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 			},
 			valid: true,
 		},
+		{
+			// txn type is correct
+			txn: txn1,
+			input: filterTransactionInput{
+				TxnType: &typ1,
+			},
+			valid: true,
+		},
 	}
 
 	for _, c := range cases {
 		require.Equal(t, c.valid, validateTxn(c.txn, c.input))
 	}
-}
-
-func TestTransactionFilterXXX(t *testing.T) {
-	clt, _ := jsonrpc.NewClient("http://localhost:8449")
-
-	trueX := true
-
-	mngr := &transactionFilter{
-		input: filterTransactionInput{
-			StartBlock:  0,
-			LimitBlocks: uintPtr(10),
-			IsTransfer:  &trueX,
-		},
-		clt:        clt.Eth(),
-		waitPeriod: 1 * time.Second,
-	}
-	mngr.run(context.Background())
 }
