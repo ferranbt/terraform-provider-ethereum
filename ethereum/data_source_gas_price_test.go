@@ -13,12 +13,12 @@ func TestAccGetGasPrice(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: `
-				data "ethereum_getGasPrice" "gas_price" {
+				data "ethereum_gas_price" "gas_price" {
 				}
 				`,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(
-						"data.ethereum_getGasPrice.gas_price", "gas_price"),
+						"data.ethereum_gas_price.gas_price", "gas_price"),
 				),
 			},
 		},

@@ -7,4 +7,6 @@ contract Hello {
     constructor(address _addr) {
         addr = _addr;
     }
+
+    receive() external payable {}
 }

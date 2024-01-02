@@ -26,7 +26,6 @@ func ContractDeploymentResource() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
-
 			"signer": {
 				Type:     schema.TypeString,
 				ForceNew: true,
@@ -34,6 +33,10 @@ func ContractDeploymentResource() *schema.Resource {
 			},
 			"hash": {
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"block_num": {
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"gas_used": {
@@ -101,6 +104,7 @@ func resourceContractDeploymentCreate(ctx context.Context, d *schema.ResourceDat
 	d.Set("hash", hash.String())
 	d.Set("gas_used", receipt.GasUsed)
 	d.Set("contract_address", receipt.ContractAddress.String())
+	d.Set("block_num", int(receipt.BlockNumber))
 
 	return nil
 }
