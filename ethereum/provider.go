@@ -28,6 +28,7 @@ func Provider() *schema.Provider {
 			"ethereum_gas_price":          datasourceGetGasPrice(),
 			"ethereum_transaction":        datasourceTransaction(),
 			"ethereum_filter_transaction": datasourceFilterTransaction(),
+			"ethereum_contract_code":      datasourceContractCode(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
