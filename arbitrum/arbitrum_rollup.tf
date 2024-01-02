@@ -55,6 +55,17 @@ data "ethereum_eoa" "batchPoster" {
   privkey = "77011b1216069743ae4317b03cd061f38a16df64860f3a9422c03463f0658193"
 }
 
+data "ethereum_contract_code" "rollup_creator" {
+  addr = local.rollup_creator_addr
+
+  lifecycle {
+    postcondition {
+      condition     = self.code != ""
+      error_message = "RollupCreator contract not deployed"
+    }
+  }
+}
+
 resource "ethereum_transaction" "create_rollup" {
   signer = data.ethereum_eoa.account.signer
 
@@ -107,12 +118,23 @@ data "ethereum_event" "rollupInitialized" {
   event    = "RollupInitialized"
 }
 
+data "ethereum_contract_code" "bridge_creator" {
+  addr = local.bridge_creator_addr
+
+  lifecycle {
+    postcondition {
+      condition     = self.code != ""
+      error_message = "BridgeCreator contract not deployed"
+    }
+  }
+}
+
 resource "ethereum_transaction" "create_bridge" {
   signer = data.ethereum_eoa.account.signer
 
   artifact = "./artifacts:BridgeCreator"
   method   = "createTokenBridge"
-  to       = locals.bridge_creator_addr
+  to       = local.bridge_creator_addr
 
   // TODO: Gas estimation fails?
   gas_limit = 40452528
@@ -184,13 +206,24 @@ resource "ethereum_transaction" "fundBatchPoster" {
 
 // ---- L3 initialization ----
 
-/*
-// TODO: We need to do something to wait until the balance is updated
 resource "ethereum_transaction" "fundSignerOnL3" {
   signer   = data.ethereum_eoa.account.signer
   to       = data.ethereum_event.rollupCreated.logs.inboxAddress
   function = "function depositEth() public payable"
   value    = "0.1 ether"
+}
+
+data "ethereum_filter_transaction" "waitFundL3" {
+  provider = "ethereum.l3"
+
+  start_block  = 0
+  limit_blocks = 10
+  to           = data.ethereum_eoa.account.address
+  is_transfer  = true
+
+  depends_on = [
+    ethereum_transaction.fundSignerOnL3
+  ]
 }
 
 resource "ethereum_transaction" "setMinimumL2BaseFee" {
@@ -238,7 +271,7 @@ data "ethereum_call" "getL1BaseFeeEstimate" {
   to       = "0x000000000000000000000000000000000000006c"
 }
 
-data "ethereum_getGasPrice" "gas_price" {
+data "ethereum_gas_price" "gas_price" {
 }
 
 resource "ethereum_transaction" "setL1PricePerUnit" {
@@ -250,8 +283,6 @@ resource "ethereum_transaction" "setL1PricePerUnit" {
   to       = "0x0000000000000000000000000000000000000070"
 
   input = [
-    tonumber(data.ethereum_call.getL1BaseFeeEstimate.output.0) + data.ethereum_getGasPrice.gas_price.gas_price
+    tonumber(data.ethereum_call.getL1BaseFeeEstimate.output.0) + data.ethereum_gas_price.gas_price.gas_price
   ]
 }
-*/
-// -- transfer ownership --
