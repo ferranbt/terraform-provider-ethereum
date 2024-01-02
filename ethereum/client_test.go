@@ -107,17 +107,25 @@ func TestTransactionFilter_RunSimple(t *testing.T) {
 
 	// wait the initial batch of 'blockNums'
 	count := uint64(1)
-	for ; count < blockNums; count++ {
-		num := <-mock.ch
-		require.Equal(t, num, count)
+	for ; count <= blockNums; count++ {
+		select {
+		case num := <-mock.ch:
+			require.Equal(t, num, count)
+		case <-time.After(2 * time.Second):
+			t.Fatal("timeout")
+		}
 	}
 
 	// move the chain and wait for the result
 	mock.move(5)
 
 	for ; count < blockNums+5; count++ {
-		num := <-mock.ch
-		require.Equal(t, num, count)
+		select {
+		case num := <-mock.ch:
+			require.Equal(t, num, count)
+		case <-time.After(2 * time.Second):
+			t.Fatal("timeout")
+		}
 	}
 }
 
@@ -213,10 +221,12 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 		From:  ethgo.Address{0x1},
 		To:    &ethgo.Address{0x2},
 		Value: big.NewInt(100),
+		Type:  ethgo.TransactionType(1),
 	}
 
 	trueVal := true
 	falseVal := false
+	typ1 := uint8(1)
 
 	var cases = []struct {
 		txn   *ethgo.Transaction
@@ -284,6 +294,14 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 			txn: &ethgo.Transaction{},
 			input: filterTransactionInput{
 				IsTransfer: &falseVal,
+			},
+			valid: true,
+		},
+		{
+			// txn type is correct
+			txn: txn1,
+			input: filterTransactionInput{
+				TxnType: &typ1,
 			},
 			valid: true,
 		},

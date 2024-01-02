@@ -136,6 +136,7 @@ type filterTransactionInput struct {
 	From        *ethgo.Address
 	To          *ethgo.Address
 	IsTransfer  *bool
+	TxnType     *uint8
 	StartBlock  uint64
 	LimitBlocks *uint64
 }
@@ -187,7 +188,7 @@ func (t *transactionFilter) run(ctx context.Context) (ethgo.Hash, error) {
 		default:
 		}
 
-		startBlock = endBlock
+		startBlock = endBlock + 1
 
 		// wait until the chain has advanced and sync again
 		for {
@@ -223,12 +224,18 @@ func validateTxn(txn *ethgo.Transaction, input filterTransactionInput) bool {
 			return false
 		}
 	}
-	if input.IsTransfer != nil {
-		isTransfer := *input.IsTransfer
-		if isTransfer && txn.Value == nil {
+	if input.TxnType != nil {
+		if *input.TxnType != uint8(txn.Type) {
 			return false
 		}
-		if !isTransfer && txn.Value != nil {
+	}
+	if input.IsTransfer != nil {
+		isTranfer := txn.Value != nil && txn.Value.Sign() != 0
+		wantTransfer := *input.IsTransfer
+		if wantTransfer && !isTranfer {
+			return false
+		}
+		if !wantTransfer && isTranfer {
 			return false
 		}
 	}
@@ -236,7 +243,7 @@ func validateTxn(txn *ethgo.Transaction, input filterTransactionInput) bool {
 }
 
 func (t *transactionFilter) syncBatch(ctx context.Context, initialBlock, ini, end uint64) (*ethgo.Hash, error) {
-	for i := ini; i < end; i++ {
+	for i := ini; i <= end; i++ {
 		// validate if we are too far away from the initial block
 		if t.input.LimitBlocks != nil {
 			limitBlocks := *t.input.LimitBlocks
