@@ -265,7 +265,6 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 			},
 			valid: false,
 		},
-
 		{
 			// to is valid
 			txn: txn1,
@@ -274,7 +273,6 @@ func TestTransactionFilter_ValidateInput(t *testing.T) {
 			},
 			valid: true,
 		},
-
 		{
 			// value is set
 			txn: txn1,
