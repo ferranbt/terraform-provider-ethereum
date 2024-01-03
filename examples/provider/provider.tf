@@ -1,0 +1,3 @@
+provider "ethereum" {
+    host = "xxx"
+}
