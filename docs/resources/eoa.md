@@ -13,7 +13,7 @@ Create a new EOA wallet.
 ## Example Usage
 
 ```terraform
-resource "eoa" "xx" {
+resource "ethereum_eoa" "account" {
 }
 ```
 
