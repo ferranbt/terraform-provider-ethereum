@@ -13,10 +13,12 @@ import (
 func datasourceGetGasPrice() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceGetGasPriceRead,
+		Description: "Get the gas price at the current block.",
 		Schema: map[string]*schema.Schema{
 			"gas_price": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The gas price in wei at the current block",
 			},
 		},
 	}

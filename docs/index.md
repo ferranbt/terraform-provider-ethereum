@@ -23,4 +23,4 @@ provider "ethereum" {
 
 ### Optional
 
-- `host` (String)
+- `host` (String) The host of the Ethereum node. Defaults to 'http://localhost:8545'.

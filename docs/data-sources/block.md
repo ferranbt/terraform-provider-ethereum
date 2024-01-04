@@ -3,16 +3,22 @@
 page_title: "ethereum_block Data Source - terraform-provider-ethereum"
 subcategory: ""
 description: |-
-  
+  Get a block.
 ---
 
 # ethereum_block (Data Source)
 
-
+Get a block.
 
 ## Example Usage
 
 ```terraform
+// example1
+data "ethereum_block" "block" {
+	tag = "latest"
+}
+
+// example2
 data "ethereum_block" "block" {
 	tag = "latest"
 }
@@ -23,11 +29,11 @@ data "ethereum_block" "block" {
 
 ### Optional
 
-- `hash` (String)
-- `number` (Number)
-- `tag` (String)
+- `hash` (String) The block hash to get.
+- `number` (Number) The block number to get.
+- `tag` (String) The block tag to get.
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `timestamp` (Number)
+- `timestamp` (Number) The timestamp of the block.

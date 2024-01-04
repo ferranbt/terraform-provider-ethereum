@@ -14,34 +14,40 @@ import (
 func datasourceCall() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceCallRead,
+		Description: "Call a contract method.",
 		Schema: map[string]*schema.Schema{
 			"to": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "The address of the contract to call.",
 			},
 			"artifact": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "The artifact of the contract to call.",
 			},
 			"method": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "The name of the method in the contract to call. ",
 			},
 			"input": {
-				Type:     schema.TypeList,
-				Required: false,
-				Optional: true,
-				ForceNew: true,
+				Type:        schema.TypeList,
+				Required:    false,
+				Optional:    true,
+				ForceNew:    true,
+				Description: "The inputs of the contract method to call.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"output": {
-				Type:     schema.TypeMap,
-				Computed: true,
+				Type:        schema.TypeMap,
+				Computed:    true,
+				Description: "The outputs of the contract call.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},

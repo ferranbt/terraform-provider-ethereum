@@ -12,38 +12,47 @@ import (
 func datasourceTransaction() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceTransactionRead,
+		Description: "Get a transaction by hash.",
 		Schema: map[string]*schema.Schema{
 			"hash": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The hash of the transaction to get.",
 			},
 			"from": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the sender of the transaction. This is calculated from the signature of the transaction.",
 			},
 			"to": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the receiver of the transaction. This is empty if the transaction is a contract creation transaction.",
 			},
 			"value": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The value of the transaction. This is the amount of wei transferred from the sender to the receiver.",
 			},
 			"gas": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The gas limit of the transaction. This is the maximum amount of gas that can be used to execute the transaction. ",
 			},
 			"gas_price": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The gas price of the transaction. This is the amount of wei that the sender is willing to pay for each unit of gas. ",
 			},
 			"nonce": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The nonce of the transaction.",
 			},
 			"input": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The input of the transaction.",
 			},
 		},
 	}

@@ -3,12 +3,12 @@
 page_title: "ethereum_contract_code Data Source - terraform-provider-ethereum"
 subcategory: ""
 description: |-
-  
+  Get the code of a contract.
 ---
 
 # ethereum_contract_code (Data Source)
 
-
+Get the code of a contract.
 
 ## Example Usage
 
@@ -23,9 +23,9 @@ data "contract_code" "pp" {
 
 ### Required
 
-- `addr` (String)
+- `addr` (String) The address of the contract to get the code from.
 
 ### Read-Only
 
-- `code` (String)
+- `code` (String) The code of the contract.
 - `id` (String) The ID of this resource.

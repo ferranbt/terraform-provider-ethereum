@@ -11,14 +11,17 @@ import (
 func datasourceENS() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceENSRead,
+		Description: "Resolve an ENS name.",
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The ENS name to resolve.",
 			},
 			"address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address resolved from the ENS name.",
 			},
 		},
 	}
