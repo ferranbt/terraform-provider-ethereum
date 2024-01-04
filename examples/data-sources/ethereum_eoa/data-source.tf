@@ -1,9 +1,3 @@
-// example1
-data "ethereum_block" "block" {
-	tag = "latest"
-}
-
-// example2
-data "ethereum_block" "block" {
-	tag = "latest"
+data "ethereum_eoa" "account" {
+  mnemonic = "test test test test test test test test test test test junk"
 }

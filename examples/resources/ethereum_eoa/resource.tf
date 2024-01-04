@@ -1,2 +1,2 @@
-resource "eoa" "xx" {
+resource "ethereum_eoa" "account" {
 }

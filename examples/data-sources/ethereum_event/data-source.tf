@@ -1,9 +1,5 @@
-// example1
-data "ethereum_block" "block" {
-	tag = "latest"
-}
-
-// example2
-data "ethereum_block" "block" {
-	tag = "latest"
+data "ethereum_event" "res" {
+  hash     = "0x..."
+  artifact = "../testcases/out:WithEvents"
+  event    = "One"
 }

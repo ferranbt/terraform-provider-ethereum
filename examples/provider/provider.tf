@@ -1,3 +1,3 @@
 provider "ethereum" {
-    host = "xxx"
+  host = "http://localhost:8545"
 }
