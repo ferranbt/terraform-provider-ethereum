@@ -13,9 +13,10 @@ func Provider() *schema.Provider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"host": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  defaultHost,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     defaultHost,
+				Description: "The host of the Ethereum node. Defaults to '" + defaultHost + "'.",
 			},
 		},
 

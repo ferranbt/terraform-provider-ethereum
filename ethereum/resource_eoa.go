@@ -11,14 +11,17 @@ import (
 
 func EOAResource() *schema.Resource {
 	return &schema.Resource{
+		Description: "Create a new EOA wallet.",
 		Schema: map[string]*schema.Schema{
 			"address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the wallet.",
 			},
 			"signer": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The signer of the wallet. This is the private key of the wallet.",
 			},
 		},
 		CreateContext: resourceEOACreate,

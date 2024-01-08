@@ -128,6 +128,13 @@ func convert(val float64, decimals int64) *big.Int {
 	// Convert the float64 to a big.Float
 	v := new(big.Float).SetFloat64(val)
 
+<<<<<<< HEAD
+=======
+func convert(val float64, decimals int64) *big.Int {
+	// Convert the float64 to a big.Float
+	v := new(big.Float).SetFloat64(val)
+
+>>>>>>> main
 	// Calculate the multiplier (10^decimals)
 	exp := new(big.Float).SetInt(new(big.Int).Exp(big.NewInt(10), big.NewInt(decimals), nil))
 

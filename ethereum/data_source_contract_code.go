@@ -14,14 +14,17 @@ import (
 func datasourceContractCode() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceContractCodeRead,
+		Description: "Get the code of a contract.",
 		Schema: map[string]*schema.Schema{
 			"addr": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The address of the contract to get the code from.",
 			},
 			"code": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The code of the contract.",
 			},
 		},
 	}

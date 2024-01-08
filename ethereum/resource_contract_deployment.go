@@ -12,40 +12,48 @@ import (
 
 func ContractDeploymentResource() *schema.Resource {
 	return &schema.Resource{
+		Description: "Deploy a contract.",
 		Schema: map[string]*schema.Schema{
 			"artifact": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "The ABI artifact of the contract to deploy.",
 			},
 			"input": {
-				Type:     schema.TypeList,
-				Optional: true,
-				ForceNew: true,
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: "The inputs of the contract constructor. If not provided, the constructor is assumed to be empty.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"signer": {
-				Type:     schema.TypeString,
-				ForceNew: true,
-				Required: true,
+				Type:        schema.TypeString,
+				ForceNew:    true,
+				Required:    true,
+				Description: "The signer of the transaction. This is the private key of the wallet.",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The hash of the transaction that creates the contract",
 			},
 			"block_num": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The block number at which the contract is deployed.",
 			},
 			"gas_used": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The amount of gas used to deploy the contract",
 			},
 			"contract_address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the deployed contract.",
 			},
 		},
 		CreateContext: resourceContractDeploymentCreate,

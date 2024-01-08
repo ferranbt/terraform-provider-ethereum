@@ -11,30 +11,37 @@ import (
 func datasourceFilterTransaction() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceFilterTransactionRead,
+		Description: "Filter transactions from a block range.",
 		Schema: map[string]*schema.Schema{
 			"start_block": {
-				Type:     schema.TypeInt,
-				Required: true,
+				Type:        schema.TypeInt,
+				Required:    true,
+				Description: "The block number to start the filter from. ",
 			},
 			"limit_blocks": {
-				Type:     schema.TypeInt,
-				Optional: true,
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Description: "The number of blocks to filter. ",
 			},
 			"from": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The address to filter transactions from.",
 			},
 			"to": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The address to filter transactions to.",
 			},
 			"is_transfer": {
-				Type:     schema.TypeBool,
-				Optional: true,
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "Whether to filter only transfer transactions.",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The hash of the transaction that matches the filter",
 			},
 		},
 	}

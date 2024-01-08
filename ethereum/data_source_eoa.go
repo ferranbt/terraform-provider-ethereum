@@ -13,24 +13,29 @@ import (
 func datasourceEoa() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceEoaRead,
+		Description: "Create a new EOA wallet.",
 		Schema: map[string]*schema.Schema{
 			"mnemonic": {
 				Type:          schema.TypeString,
 				Optional:      true,
 				ConflictsWith: []string{"privkey"},
+				Description:   "The mnemonic of the wallet to use.",
 			},
 			"privkey": {
 				Type:          schema.TypeString,
 				Optional:      true,
 				ConflictsWith: []string{"mnemonic"},
+				Description:   "The private key of the wallet to use.",
 			},
 			"address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the wallet.",
 			},
 			"signer": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The signer of the wallet. This is the private key of the wallet.",
 			},
 		},
 	}

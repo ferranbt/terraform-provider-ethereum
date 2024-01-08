@@ -12,26 +12,32 @@ import (
 func datasourceEvent() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceEventRead,
+		Description: "Search for an event in a transaction.",
 		Schema: map[string]*schema.Schema{
 			"event": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The name of the event to search for. The even must be defined in the artifact",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The hash of the transaction to search for the event.",
 			},
 			"artifact": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The ABI artifact of the contract to call. ",
 			},
 			"address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The address of the contract that emitted the event.",
 			},
 			"logs": {
-				Type:     schema.TypeMap,
-				Computed: true,
+				Type:        schema.TypeMap,
+				Computed:    true,
+				Description: "The logs of the event. The keys are the names of the event parameters and the values are the values of the event parameters.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
