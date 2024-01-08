@@ -12,22 +12,27 @@ import (
 func datasourceBlock() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datasourceBlockRead,
+		Description: "Get a block.",
 		Schema: map[string]*schema.Schema{
 			"number": {
-				Type:     schema.TypeInt,
-				Optional: true,
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Description: "The block number to get.",
 			},
 			"tag": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The block tag to get. ",
 			},
 			"hash": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "The block hash to get. ",
 			},
 			"timestamp": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: "The timestamp of the block. ",
 			},
 		},
 	}
