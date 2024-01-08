@@ -83,6 +83,10 @@ func TestParseEther(t *testing.T) {
 			big.NewInt(1000000000000000000),
 		},
 		{
+			"0.4 ether",
+			big.NewInt(400000000000000022),
+		},
+		{
 			"1 gwei",
 			big.NewInt(1000000000),
 		},
