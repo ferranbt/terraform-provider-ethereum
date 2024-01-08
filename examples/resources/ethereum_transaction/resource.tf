@@ -28,3 +28,14 @@ resource "ethereum_transaction" "update" {
     })
   ]
 }
+
+// Contract call using the function signature
+resource "ethereum_transaction" "update" {
+  signer = data.ethereum_eoa.account.signer
+  to     = "0x..."
+
+  function = "applyFunc(uint256)"
+  input = [
+    "2",
+  ]
+}
