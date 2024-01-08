@@ -15,7 +15,6 @@ terraform {
 }
 
 provider "ethereum" {
-  host = "https://arbitrum-sepolia.infura.io/v3/47333b705ded484d8a9aac09b71b36bb"
   // host = "http://localhost:8545"
 }
 
@@ -41,7 +40,6 @@ locals {
 }
 
 data "ethereum_eoa" "account" {
-  privkey = "6fd0b749794e67a63154bdbf406b18ebb3b372111472402ed5032a2651704a71"
   // mnemonic = "test test test test test test test test test test test junk"
 }
 
